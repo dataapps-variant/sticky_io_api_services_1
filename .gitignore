@@ -1,0 +1,11 @@
+# Never commit secrets or local env
+.env
+*.json.key
+service-account*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/

@@ -1,0 +1,10 @@
+[
+  {"name": "order_id",     "type": "STRING",    "mode": "REQUIRED", "description": "Sticky.io order id (natural key / MERGE key)."},
+  {"name": "company",      "type": "STRING",    "mode": "NULLABLE", "description": "Sticky.io app subdomain this order came from."},
+  {"name": "source",       "type": "STRING",    "mode": "NULLABLE", "description": "'original' (created) or 'updated' (status change)."},
+  {"name": "time_stamp",   "type": "STRING",    "mode": "NULLABLE", "description": "Raw sale timestamp string exactly as sticky.io sent it (YYYY-MM-DD HH:MM:SS)."},
+  {"name": "time_of_sale", "type": "TIMESTAMP", "mode": "NULLABLE", "description": "time_stamp parsed to a real UTC timestamp."},
+  {"name": "date_of_sale", "type": "DATE",      "mode": "NULLABLE", "description": "Sale date in the reporting timezone (partition column)."},
+  {"name": "loaded_at",    "type": "TIMESTAMP", "mode": "NULLABLE", "description": "When this row was written by the ETL."},
+  {"name": "raw_order",    "type": "STRING",    "mode": "NULLABLE", "description": "The COMPLETE order object as JSON text - nothing dropped (utm_info, custom_fields, order_customer_types, products, totals_breakdown, ...)."}
+]
