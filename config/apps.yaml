@@ -16,44 +16,44 @@
 # Run ALL apps:  /run?mode=backfill&company=all&token=...   (loops every app below)
 # ---------------------------------------------------------------------------
 apps:
-  - name: at
-    company: REPLACE_WITH_AT_SUBDOMAIN
-    cred_secret: sticky-cred-at
-    source_timezone: America/New_York
-    report_timezone: America/New_York
-    campaign_id: all
-
-  - name: cn
-    company: REPLACE_WITH_CN_SUBDOMAIN
-    cred_secret: sticky-cred-cn
-    source_timezone: America/New_York
-    report_timezone: America/New_York
-    campaign_id: all
-
   - name: ct
-    company: REPLACE_WITH_CT_SUBDOMAIN
+    company: mindworksllc
     cred_secret: sticky-cred-ct
     source_timezone: America/New_York
     report_timezone: America/New_York
     campaign_id: all
 
-  - name: fs
-    company: REPLACE_WITH_FS_SUBDOMAIN
-    cred_secret: sticky-cred-fs
-    source_timezone: America/New_York
-    report_timezone: America/New_York
-    campaign_id: all
+# - name: cn
+#   company: REPLACE_WITH_CN_SUBDOMAIN
+#   cred_secret: sticky-cred-cn
+#   source_timezone: America/New_York
+#   report_timezone: America/New_York
+#   campaign_id: all
 
-  - name: jf
-    company: REPLACE_WITH_JF_SUBDOMAIN
-    cred_secret: sticky-cred-jf
-    source_timezone: America/New_York
-    report_timezone: America/New_York
-    campaign_id: all
+  # - name: ct
+  #   company: REPLACE_WITH_CT_SUBDOMAIN
+  #   cred_secret: sticky-cred-ct
+  #   source_timezone: America/New_York
+  #   report_timezone: America/New_York
+  #   campaign_id: all
 
-  - name: pd
-    company: REPLACE_WITH_PD_SUBDOMAIN
-    cred_secret: sticky-cred-pd
-    source_timezone: America/New_York
-    report_timezone: America/New_York
-    campaign_id: all
+  # - name: fs
+  #   company: REPLACE_WITH_FS_SUBDOMAIN
+  #   cred_secret: sticky-cred-fs
+  #   source_timezone: America/New_York
+  #   report_timezone: America/New_York
+  #   campaign_id: all
+
+  # - name: jf
+  #   company: REPLACE_WITH_JF_SUBDOMAIN
+  #   cred_secret: sticky-cred-jf
+  #   source_timezone: America/New_York
+  #   report_timezone: America/New_York
+  #   campaign_id: all
+
+  # - name: pd
+  #   company: REPLACE_WITH_PD_SUBDOMAIN
+  #   cred_secret: sticky-cred-pd
+  #   source_timezone: America/New_York
+  #   report_timezone: America/New_York
+  #   campaign_id: all
