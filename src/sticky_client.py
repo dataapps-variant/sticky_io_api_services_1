@@ -82,7 +82,15 @@ class StickyAPIClient:
             self._request_times.append(time.time())
 
     async def _post(self, endpoint: str, payload: dict, max_retries: int = 4) -> dict:
-        """POST with rate limiting and exponential-backoff retries."""
+        """POST with rate limiting and exponential-backoff retries.
+
+        IMPORTANT: sticky.io can return HTTP 200 "OK" while the JSON body itself
+        reports a real error, e.g. {"response_code":"668","error_message":
+        "Unauthorized IP Address"}. If we only checked the HTTP status, this would
+        be silently treated as a valid (empty) response -> orders would appear to
+        be "0 found" instead of surfacing the real problem. So we explicitly check
+        for an error response_code / status inside the body too.
+        """
         delay = 2
         for attempt in range(1, max_retries + 1):
             await self._rate_limit()
@@ -99,7 +107,27 @@ class StickyAPIClient:
                         await asyncio.sleep(delay)
                         delay *= 2
                         continue
-                    return await resp.json()
+
+                    body = await resp.json()
+                    # Detect sticky.io-style embedded errors even on HTTP 200.
+                    resp_code = str(body.get("response_code", "")).strip()
+                    status_field = str(body.get("status", "")).strip().upper()
+                    err_msg = body.get("error_message")
+                    looks_like_error = (
+                        (resp_code and resp_code not in ("100", "success", ""))
+                        or status_field == "FAILURE"
+                        or err_msg
+                    )
+                    if looks_like_error:
+                        detail = f"response_code={resp_code!r} status={status_field!r} error_message={err_msg!r}"
+                        if attempt == max_retries:
+                            raise RuntimeError(f"{endpoint} returned an error body (HTTP 200): {detail}")
+                        logger.warning(f"{endpoint} error body, retry {attempt}: {detail}")
+                        await asyncio.sleep(delay)
+                        delay *= 2
+                        continue
+
+                    return body
             except aiohttp.ClientError as exc:
                 if attempt == max_retries:
                     raise RuntimeError(f"{endpoint} network error after {max_retries} attempts: {exc}")
